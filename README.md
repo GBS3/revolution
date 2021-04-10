@@ -140,7 +140,7 @@ There are multiple built-in spinner styles that you can take advantage of. *Howe
 Revolution(style='classic')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/classic" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/classic.gif" width="255">
 
 * Windows-friendly
 * If a Revolution object doesn't contain a specified style, this is the style that it will default to
