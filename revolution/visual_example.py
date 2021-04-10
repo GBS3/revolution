@@ -3,7 +3,7 @@ import time
 from collections import deque
 
 
-class Spinner:
+class _Spinner:
     spinners = {
         'classic': (['|', '/', '-', '\\'], 0.1),
         'dots': (['▫ ▫ ▫', '▪ ▫ ▫', '▫ ▪ ▫', '▫ ▫ ▪'], 0.2),
@@ -50,9 +50,9 @@ class VisualExample:
         return
 
     def __init__(self):
-        self.maxlen = len(Spinner.spinners)
+        self.maxlen = len(_Spinner.spinners)
         self.deque = deque(
-            [(Spinner.spinners[i][0], i) for i in Spinner.spinners], maxlen=self.maxlen)
+            [(_Spinner.spinners[i][0], i) for i in _Spinner.spinners], maxlen=self.maxlen)
 
         self.count = 0
 
