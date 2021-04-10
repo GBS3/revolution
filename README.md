@@ -140,7 +140,7 @@ There are multiple built-in spinner styles that you can take advantage of. *Howe
 Revolution(style='classic')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/classic.gif?token=AQ2HXWZCQS3BFDHFKOIPWJ3AOEJZ6" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/classic" width="255">
 
 * Windows-friendly
 * If a Revolution object doesn't contain a specified style, this is the style that it will default to
@@ -151,7 +151,7 @@ Revolution(style='classic')
 Revolution(style='dots')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/dots.gif?token=AQ2HXW64K5O46N33ZFE2KYDAOEKGI" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/dots.gif" width="255">
 
 * Windows-friendly
 
@@ -161,7 +161,7 @@ Revolution(style='dots')
 Revolution(style='equal')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/equal.gif?token=AQ2HXWZOYM6MPXPIEMLQF2TAOEKKY" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/equal.gif" width="255">
 
 * Windows-friendly
 
@@ -171,7 +171,7 @@ Revolution(style='equal')
 Revolution(style='braille')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/braille.gif?token=AQ2HXW64MCJ37TTBJ3TCZP3AOEKLS" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/braille.gif" width="255">
 
 ### braille_long
 
@@ -179,7 +179,7 @@ Revolution(style='braille')
 Revolution(style='braille_long')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/braille_long.gif?token=AQ2HXW3GJYLUM6BUWW2LP23AOEKNI" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/braille_long.gif" width="255">
 
 ### braille_crawl
 
@@ -187,7 +187,7 @@ Revolution(style='braille_long')
 Revolution(style='braille_crawl')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/braille_crawl.gif?token=AQ2HXW4QRQ55VPMGA3Z7E3DAOEKOA" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/braille_crawl.gif" width="255">
 
 ### braille_bounce
 
@@ -195,7 +195,7 @@ Revolution(style='braille_crawl')
 Revolution(style='braille_bounce')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/braille_bounce.gif?token=AQ2HXW5Q5N5D2Z6OOW4HQNTAOEKPK" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/braille_bounce.gif" width="255">
 
 ### arc
 
@@ -203,7 +203,7 @@ Revolution(style='braille_bounce')
 Revolution(style='arc')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/arc.gif?token=AQ2HXWZJOOGS3NI6GMJRUDLAOEKQK" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/arc.gif" width="255">
 
 ### clear_quadrants
 
@@ -211,5 +211,5 @@ Revolution(style='arc')
 Revolution(style='clear_quadrants')
 ```
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/clear_quadrants.gif?token=AQ2HXW5K3LMO4VDL7ENWT2LAOEKRA" width="255">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/clear_quadrants.gif" width="255">
 
