@@ -15,6 +15,7 @@ class Revolution:
 
         # If the decorator doesn't have any arguments:
         if hasattr(self, '_func'):
+            self.start()
             self._func(*args, **kwargs)
             self._event.set()
             while not self._spin_event.is_set():
@@ -24,6 +25,9 @@ class Revolution:
             func = args[0]
             if isinstance(func, types.FunctionType):
                 def wrapper(*margs, **mkwargs):
+                    if not hasattr(self, '_spin_event'):
+                        self.start()
+
                     func(*margs, **mkwargs)
 
                     if self._total:
@@ -41,6 +45,8 @@ class Revolution:
         """
         Entry point for with statements. Used in conjunction with __exit__.
         """
+
+        self.start()
         return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
@@ -60,6 +66,8 @@ class Revolution:
         Allows for loops to be used with Revolution objects. Used in conjunction with
         __next__.
         """
+
+        self.start()
         return self
 
     def __next__(self):
@@ -74,7 +82,7 @@ class Revolution:
                 self._count += self._step
                 return return_value
             raise StopIteration
-        # otherwise, it's likely of type range and so:
+        # otherwise, it's likely a range object and so:
         else:
             if self._count < self._stop:
                 return_value = self._count
@@ -178,6 +186,7 @@ class Revolution:
 
         self._rate = 0
 
+    def start(self):
         self._event = threading.Event()
         thread = threading.Thread(target=self._spin)
         if not self._total:
