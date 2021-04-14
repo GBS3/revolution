@@ -16,10 +16,11 @@ class Revolution:
         # If the decorator doesn't have any arguments:
         if hasattr(self, '_func'):
             self.start()
-            self._func(*args, **kwargs)
+            result = self._func(*args, **kwargs)
             self._event.set()
             while not self._spin_event.is_set():
                 pass
+            return result
         # ...otherwise, the function is in *args:
         else:
             func = args[0]
@@ -28,17 +29,19 @@ class Revolution:
                     if not hasattr(self, '_spin_event'):
                         self.start()
 
-                    func(*margs, **mkwargs)
+                    result = func(*margs, **mkwargs)
 
                     if self._total:
                         self._count += 1
                         if self._total == self._count:
                             while not self._spin_event.is_set():
                                 pass
+                            return result
                     else:
                         self._event.set()
                         while not self._spin_event.is_set():
                             pass
+                        return result
                 return wrapper
 
     def __enter__(self):
