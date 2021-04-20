@@ -26,8 +26,7 @@ class Revolution:
             func = args[0]
             if isinstance(func, types.FunctionType):
                 def wrapper(*margs, **mkwargs):
-                    if not hasattr(self, '_spin_event'):
-                        self.start()
+                    self.start()
 
                     result = func(*margs, **mkwargs)
 
