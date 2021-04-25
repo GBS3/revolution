@@ -14,6 +14,10 @@ classifiers = [
     'Operating System :: OS Independent',
 ]
 
+test_requirements = [
+    'pytest'
+]
+
 main = pathlib.Path(__file__).parent
 about = {}
 with open(main / 'revolution' / '__version__.py', 'r', encoding='utf-8') as f:
@@ -30,8 +34,12 @@ setuptools.setup(
     url=about['__url__'],
     license=about['__license__'],
     packages=setuptools.find_packages(),
+    package_data={'': ['LICENSE']},
+    include_package_data=True,
+    zip_safe=False,
     classifiers=classifiers,
     keywords=['spinner', 'progress', 'iterations'],
+    tests_require=test_requirements,
     entry_points={
         'console_scripts': ['revolution=revolution.__init__:main']
     },
