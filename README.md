@@ -63,12 +63,14 @@ The `interval` paremeter accepts a float value indicating how often the spinner 
 `revolution` can be used as a **function decorator**:
 
 ```py
+import time
+
 from revolution import Revolution
 
 @Revolution
 def do_something():
     for _ in range(10):
-        pass
+        time.sleep(0.1)
 
 do_something()
 ```
