@@ -1,13 +1,22 @@
+#!/usr/bin/env
+
+#   _   _   _   _   _   _   _   _   _   _
+#  / \ / \ / \ / \ / \ / \ / \ / \ / \ / \
+# ( r | e | v | o | l | u | t | i | o | n )
+#  \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/
+
 import argparse
 import os
 import platform
 
-from .revolution import Revolution
-from .visual_example import VisualExample
+
 from .__version__ import (
     __title__, __version__, __author__, __author_email__,
     __description__, __url__, __license__, __copyright__,
 )
+from . import spinner
+from .revolution import Revolution
+from .visual_example import VisualExample
 
 
 def show_visual():
