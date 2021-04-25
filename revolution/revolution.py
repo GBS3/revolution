@@ -1,10 +1,15 @@
+import math
 import platform
+import shutil
+import sys
 import threading
 import time
 import traceback
 import types
 
 from .spinner import Spinner
+from .colors import Color
+from .colors import wrap_text_with_color
 
 
 class Revolution:
@@ -17,7 +22,7 @@ class Revolution:
         if hasattr(self, '_func'):
             self.start()
             result = self._func(*args, **kwargs)
-            self._event.set()
+            self._main_event.set()
             while not self._spin_event.is_set():
                 pass
             return result
@@ -37,7 +42,7 @@ class Revolution:
                                 pass
                             return result
                     else:
-                        self._event.set()
+                        self._main_event.set()
                         while not self._spin_event.is_set():
                             pass
                         return result
@@ -56,7 +61,7 @@ class Revolution:
         Exit point for with statements. Used in conjunction with __enter__.
         """
 
-        self._event.set()
+        self._main_event.set()
         if (exc_type, exc_value, exc_traceback) == (None, None, None):
             while not self._spin_event.is_set():
                 pass
@@ -92,14 +97,14 @@ class Revolution:
                 return return_value
             raise StopIteration
 
-    def __init__(self, func=None, desc='', total=None, style='', safe=True,
-                 interval=None):
+    def __init__(self, func=None, desc='', total=None, style='',
+                 color='blue', success=None, safe=True, interval=None):
         """
         FUNC
 
         The `func` parameter may seem a little odd but it's necessary in order to be able
         to use a Revolution object as a function decorator and as an iterable or through a
-        with statement. 
+        with statement.
 
         The `func` parameter should be left blank unless you initialize a Revolution object
         with a range object or a list.
@@ -108,7 +113,7 @@ class Revolution:
         DESC
 
         The `desc` parameter accepts a string object that will be displayed alongside the
-        visual spinner. 
+        visual spinner.
 
         -----
         TOTAL
@@ -129,14 +134,37 @@ class Revolution:
         The `style` parameter accepts a string object that will be used to specify the spinner
         style. If `style` is None or if it doesn't exist, the classic style will be used.
 
+
+        -----
+        COLOR
+
+        The `color` parameter accepts a string object that will specify the color of the
+        spinner. If a color is not provided, it will default to 'blue'.
+
+        Color options:
+            * 'black'
+            * 'red'
+            * 'green'
+            * 'yellow'
+            * 'blue'
+            * 'violet'
+            * 'cyan'
+            * 'white'
+
+        -----
+        SUCCESS
+
+        The 'success' parameter accepts a string object that will display as the spinner
+        description when the spinner animation stops.
+
         -----
         SAFE
 
         The `safe` parameter accepts a bool value that will use a spinner style that is safe
         for terminals on Windows machines.
 
-        Often, certain spinner styles (such as any of the Braille styles) will appear as 
-        boxed-in question marks in CMD and PowerShell if the user is using the default font 
+        Often, certain spinner styles (such as any of the Braille styles) will appear as
+        boxed-in question marks in CMD and PowerShell if the user is using the default font
         for those applications. If you are using a certain spinner style and are unsure as to
         how it will appear on Windows machines, it is recommended that you leave `safe` set to
         its default value, True.
@@ -174,6 +202,18 @@ class Revolution:
             self._total = total
 
         self._desc = desc
+        self._message = desc
+
+        # For success messages:
+        self._success_message = success or desc
+        green = Color('green')
+        self._success_frame = wrap_text_with_color('+', green.color)
+        self._frame = self._success_frame
+
+        # For fail messages:
+        self._fail_message = desc
+        red = Color('red')
+        self._fail_frame = wrap_text_with_color('-', red.color)
 
         # Determines which spinner style should be used based on the OS:
         if safe:
@@ -183,60 +223,140 @@ class Revolution:
                 self._style = style or 'classic'
         else:
             self._style = style or 'classic'
-        self._spinner = Spinner(self._style, interval)
+
+        self._spinner = Spinner(self._style, interval, color)
         self._interval = self._spinner.interval
 
-        self._rate = 0
+        self._rate = 0.0
+
+    @property
+    def success(self):
+        return self._success_message
+
+    @success.setter
+    def success(self, text):
+        self._success_message = text
+        self._message = self._success_message
+
+        try:
+            self.stop()
+        except AttributeError:
+            pass
+
+    @property
+    def fail(self):
+        return self._fail_message
+
+    @fail.setter
+    def fail(self, text):
+        self._fail_message = text
+        self._message = self._fail_message
+        self._frame = self._fail_frame
+
+        try:
+            self.stop()
+        except AttributeError:
+            pass
+
+    @staticmethod
+    def make_padding() -> int:
+        """
+        Returns number of columns to use for spacing.
+        """
+        num_columns = shutil.get_terminal_size()[0]
+        padding = math.floor(num_columns * 0.2)
+        return padding
 
     def start(self):
-        self._event = threading.Event()
-        thread = threading.Thread(target=self._spin)
-        if not self._total:
-            thread.setDaemon(True)
-        thread.start()
+        """
+        Starts the method responsible for animating spinner frames to the console.
+
+        If this method is used manually and externally, the user is responsible for
+        calling the `stop` method as well (or `success` or `fail`).
+        """
+
+        self._main_event = threading.Event()
+        # self._main_thread targets the function responsible for animating frames:
+        self._main_thread = threading.Thread(target=self._spin)
+
+        # Set self._main_thread as daemon so this internal thread will quit if the
+        # main thread quits:
+        self._main_thread.setDaemon(True)
+        self._main_thread.start()
 
     def stop(self):
-        if not self._event.is_set():
-            self._event.set()
+        """
+        Stops the method responsible for animating spinner frames to the console.
+
+        If a user manually calls a Revolution object's `start` method, then they
+        are responsible for calling that object's `stop` method as well.
+        """
+
+        if not self._main_event.is_set():
+            self._main_event.set()
+            self._main_thread.join()
 
     def update(self, step=1):
+        """
+        Updates the `_count` member variable.
+
+        If `step` isn't provided a value, `_count` will be incremented by 1 by default.
+        """
         self._count += step
 
     def _spin(self):
+        """
+        Prints a spinner animation frame to the console.
+        """
+
         # For preventing premature ejection:
         self._spin_event = threading.Event()
 
+        # Enable thread for measuring rate:
+        self._rate_event = threading.Event()
         rate_thread = threading.Thread(target=self._update_rate)
         rate_thread.setDaemon(True)
         rate_thread.start()
 
-        statement = self._make_statement()
+        self._statement = self._make_statement()
 
         while True:
-            for spinner in self._spinner:
+            for frame in self._spinner:
                 print('\r', end='')
-                print(statement.format(
-                    spinner, self._desc, self._count, self._total, self._rate),
-                    end='', flush=False)
-                if self._event.is_set() or self._count == self._total:
-                    print()
+                sys.stdout.write(self._statement.format(
+                    frame, self._desc, self._count, self._total, self._rate))
+
+                if self._main_event.is_set() or self._count == self._total:
+                    print('\r', end='')
+                    sys.stdout.write(self._statement.format(
+                        self._frame, self._message, self._count, self._total, self._rate) + '\n')
+
+                    self._rate_event.set()
                     self._spin_event.set()
                     return
+
                 time.sleep(self._interval)
 
     def _make_statement(self):
+        """
+        Returns a string containing the format to display based on whether a Revolution
+        instance's `total` parameter is provided a value.
+        """
+
         if self._total:
-            statement = ' {} {} [{}/{}] ({})    '
+            statement = ' {} {} « {}/{} » [{}]' + (' ' * self.make_padding())
         else:
-            statement = ' {} {}    '
+            statement = ' {} {}' + (' ' * self.make_padding())
         return statement
 
     def _update_rate(self):
+        """
+        Calculates the number of iterations per second by dividing the current `_count`
+        by the running time of the spinner.
+        """
+
         if self._total:
-            last_time = time.perf_counter()
-            previous_count = self._count
-            while True:
-                self._rate = f'{round((self._count - previous_count) / (time.perf_counter() - last_time), 4)} it/s'
-                last_time = time.perf_counter()
-                previous_count = self._count
-                time.sleep(0.5)
+            start = time.perf_counter()
+            while not self._rate_event.is_set():
+                self._rate = f'{round(self._count / (time.perf_counter() - start), 4)} it/s'
+                time.sleep(0.25)
