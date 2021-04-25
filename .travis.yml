@@ -13,8 +13,7 @@ before_install:
   - pip install -U pytest
   - pip install codecov
 
-install:
-  - pip install ".[test]"
+install: pip install -e .
 
 script: pytest
 
