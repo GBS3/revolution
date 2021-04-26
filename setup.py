@@ -15,7 +15,10 @@ classifiers = [
 ]
 
 test_requirements = [
-    'pytest'
+    'codecov',
+    'coverage',
+    'pytest',
+    'pytest-cov'
 ]
 
 main = pathlib.Path(__file__).parent
