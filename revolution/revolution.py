@@ -100,80 +100,61 @@ class Revolution:
     def __init__(self, func=None, desc='', total=None, style='',
                  color='blue', success=None, safe=True, interval=None):
         """
-        FUNC
+        Initializes a Revolution object.
 
-        The `func` parameter may seem a little odd but it's necessary in order to be able
-        to use a Revolution object as a function decorator and as an iterable or through a
-        with statement.
+        Parameters
+        ==========
+        func : list or range, optional
+            If this is a list or range object, it will iterate over each of the elements
+            and return them one by one.
 
-        The `func` parameter should be left blank unless you initialize a Revolution object
-        with a range object or a list.
+            This parameter is necessary to be able to use a Revolution object as a function
+            decorator.
 
-        -----
-        DESC
+        desc : str, optional
+            A string to use in place of the text that displays beside the spinner.
 
-        The `desc` parameter accepts a string object that will be displayed alongside the
-        visual spinner.
+        total : int, optional
+            An integer that indicates the total number of expected iterations.
 
-        -----
-        TOTAL
+            It's recommended that you do not include this when using a Revolution object
+            as a function decorator.
 
-        The `total` parameter accepts an integer value that will be used as the total number
-        of expected iterations.
+        style : str, optional
+            A string that indicates which spinner style to use. If style is None or if it
+            doesn't exist, the classic style will be used.
 
-        It's recommended that you do not include this value when using a Revolution object as
-        a function decorator. The exception to this is if the decorated function is the target
-        of a concurrency operation (for example: concurrent.futures).
+            Available options can be viewed by running `revolution --example` or
+            `revolution -e` in your console.
 
-        For use as a decorator, ensuring you have the correct total specified is crucial. For
-        with statements, it is not.
+        color : str, optional
+            A string that indicates which color should be used for the spinner. If a color
+            is not provided, the color will default to 'blue'.
 
-        -----
-        STYLE
+            Available options:
+                * 'black'
+                * 'red'
+                * 'green'
+                * 'yellow'
+                * 'blue'
+                * 'violet'
+                * 'cyan'
+                * 'white'
 
-        The `style` parameter accepts a string object that will be used to specify the spinner
-        style. If `style` is None or if it doesn't exist, the classic style will be used.
+        success : str, optional
+            A string that will be displayed beside the spinner when the spinner animation
+            stops.
 
+        safe : bool, optional
+            If True (default), spinners on Windows machines will always use the
+            'classic' style (even if a different style is provided). 
 
-        -----
-        COLOR
+            If you are using a certain spinner style and are unsure as to how it will 
+            appear on Windows machines, it is recommended that you leave `safe` set to
+            its default value.
 
-        The `color` parameter accepts a string object that will specify the color of the
-        spinner. If a color is not provided, it will default to 'blue'.
-
-        Color options:
-            * 'black'
-            * 'red'
-            * 'green'
-            * 'yellow'
-            * 'blue'
-            * 'violet'
-            * 'cyan'
-            * 'white'
-
-        -----
-        SUCCESS
-
-        The 'success' parameter accepts a string object that will display as the spinner
-        description when the spinner animation stops.
-
-        -----
-        SAFE
-
-        The `safe` parameter accepts a bool value that will use a spinner style that is safe
-        for terminals on Windows machines.
-
-        Often, certain spinner styles (such as any of the Braille styles) will appear as
-        boxed-in question marks in CMD and PowerShell if the user is using the default font
-        for those applications. If you are using a certain spinner style and are unsure as to
-        how it will appear on Windows machines, it is recommended that you leave `safe` set to
-        its default value, True.
-
-        -----
-        INTERVAL
-
-        The `interval` paremeter accepts a float value indicating how often the spinner should
-        refresh.
+        interval : float, optional
+            A float value that is used to indicate the refresh rate of the entire spinner.
         """
 
         if func:
@@ -300,7 +281,19 @@ class Revolution:
         """
         Updates the `_count` member variable.
 
-        If `step` isn't provided a value, `_count` will be incremented by 1 by default.
+        Parameters
+        ==========
+        step : int, optional
+            Indicates by how much the _count member variable should be incremented.
+
+        Example
+        =======
+        >>> from revolution import Revolution
+        >>> rev = Revolution()
+        >>> rev.start()
+        >>> rev.update()
+        >>> rev.update(2)
+        >>> rev.stop()
         """
         self._count += step
 
