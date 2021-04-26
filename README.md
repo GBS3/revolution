@@ -124,7 +124,7 @@ These are the available parameters for initializing a Revolution object:
 Revolution(func=None, desc='', total=None, style='', color='blue', success=None, safe=True, interval=None)
 ```
 
-### `func`
+#### `func`
 <details>
 <summary>More info</summary>
 
@@ -136,7 +136,7 @@ The `func` parameter should be left blank unless you initialize a Revolution obj
 
 </details>
 
-### `desc`
+#### `desc`
 <details>
 <summary>More info</summary>
 
@@ -146,7 +146,7 @@ A string to use in place of the text that displays beside the spinner.
 
 </details>
 
-### `total`
+#### `total`
 <details>
 <summary>More info</summary>
 
@@ -156,7 +156,7 @@ An integer that indicates the total number of expected iterations.
 
 </details>
 
-### `style`
+#### `style`
 <details>
 <summary>More info</summary>
 
@@ -168,7 +168,7 @@ Available options can be viewed by running `revolution --example` or `revolution
 
 </details>
 
-### `color`
+#### `color`
 <details>
 <summary>More info</summary>
 
@@ -188,7 +188,7 @@ Available options:
 
 </details>
 
-### `success`
+#### `success`
 <details>
 <summary>More info</summary>
 
@@ -198,7 +198,7 @@ A string that will be displayed beside the spinner when the spinner animation st
 
 </details>
 
-### `safe`
+#### `safe`
 <details>
 <summary>More info</summary>
 
@@ -210,7 +210,7 @@ If you are using a certain spinner style and are unsure as to how it will appear
 
 </details>
 
-### `interval`
+#### `interval`
 <details>
 <summary>More info</summary>
 
