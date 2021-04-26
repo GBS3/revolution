@@ -2,9 +2,11 @@
 
 ![Supported Versions](https://img.shields.io/pypi/pyversions/revolution?style=flat-square)
 ![PyPI Version](https://img.shields.io/pypi/v/revolution?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/GBS3/revolution/revolution?style=flat-square)
+![Codecov](https://img.shields.io/codecov/c/github/GBS3/revolution?style=flat-square)
 ![License](https://img.shields.io/pypi/l/revolution?style=flat-square)
 
-<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/icon.gif" width="200" align="right">
+<img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/icon.gif?token=AQ2HXW2ZE4ML27FSUQRTLGLAOEKU6" width="200" align="right">
 
 An assortment of spinners to use while your Python programs run.
 
@@ -16,8 +18,6 @@ In order to install `revolution`, run the following in your command line:
 pip install revolution
 ```
 
-`revolution` doesn't have any dependencies.
-
 ## Usage
 
 In order to use `revolution` in your code, importing it is as simple as:
@@ -28,35 +28,107 @@ from revolution import Revolution
 
 ### Parameters for Revolution()
 
-The parameters for instantiating a Revolution object are as follows:
+These are the available parameters for initializing a Revolution object:
 
-```
-Revolution(func=None, desc='', total=None, style='', safe=True, interval=None)
+```py
+Revolution(func=None, desc='', total=None, style='', color='blue', success=None, safe=True, interval=None)
 ```
 
-#### func
+#### `func`
+<details>
+<summary>More info</summary>
+
+`func` : list or range, optional
+
+If this is a list or range object, it will iterate over each of the elements and return them one by one.
 
 The `func` parameter should be left blank unless you initialize a Revolution object with a range object or a list.
 
-#### desc
+</details>
 
-The `desc` parameter accepts a string object that will be displayed alongside the visual spinner. 
+#### `desc`
+<details>
+<summary>More info</summary>
 
-#### total
+`desc` : str, optional
 
-The `total` parameter accepts an integer value that will be used as the total number of expected iterations.
+A string to use in place of the text that displays beside the spinner.
 
-#### style
+</details>
 
-The `style` parameter accepts a string object that will be used to specify the spinner style. If `style` is None or if it doesn't exist, the classic style will be used.
+#### `total`
+<details>
+<summary>More info</summary>
 
-#### safe
+`total` : int, optional
 
-The `safe` parameter accepts a bool value that will use a spinner style that is safe for terminals on Windows machines.
+An integer that indicates the total number of expected iterations.
 
-#### interval
+</details>
 
-The `interval` paremeter accepts a float value indicating how often the spinner should refresh.
+#### `style`
+<details>
+<summary>More info</summary>
+
+`style` : str, optional
+
+A string that indicates which spinner style to use. If style is None or if it doesn't exist, the classic style will be used.
+
+Available options can be viewed by running `revolution --example` or `revolution -e` in your console.
+
+</details>
+
+#### `color`
+<details>
+<summary>More info</summary>
+
+`color` : str, optional
+
+A string that indicates which color should be used for the spinner. If a color is not provided, the color will default to 'blue'.
+
+Available options:
+    * `black`
+    * `red`
+    * `green`
+    * `yellow`
+    * `blue`
+    * `violet`
+    * `cyan`
+    * `white`
+
+</details>
+
+#### `success`
+<details>
+<summary>More info</summary>
+
+`success` : str, optional
+
+A string that will be displayed beside the spinner when the spinner animation stops.
+
+</details>
+
+#### `safe`
+<details>
+<summary>More info</summary>
+
+`safe` : bool, optional
+
+If True (default), spinners on Windows machines will always use the 'classic' style (even if a different style is provided).
+
+If you are using a certain spinner style and are unsure as to how it will appear on Windows machines, it is recommended that you leave `safe` set to its default value.
+
+</details>
+
+#### `interval`
+<details>
+<summary>More info</summary>
+
+`interval` : float, optional
+
+A float value that is used to indicate the refresh rate of the entire spinner.
+
+</details>
 
 ### Function decorator
 
@@ -78,12 +150,14 @@ do_something()
 You can also provide it a description while you wait for your task to finish:
 
 ```py
+import time
+
 from revolution import Revolution
 
 @Revolution(desc='Just passing time...')
 def do_something():
     for _ in range(10):
-        pass
+        time.sleep(0.1)
 
 do_something()
 ```
@@ -93,21 +167,27 @@ do_something()
 Another possible way to implement `revolution` is through the use of a **with** statement:
 
 ```py
+import time
+
 from revolution import Revolution
 
-with Revolution(desc='Running through numbers') as revolution:
+with Revolution(desc='Running through numbers') as rev:
     for _ in range(100):
-        revolution.update(1) 
+        time.sleep(0.1)
+        rev.update(1) 
 ```
 
 You can also include a visual counter by including a total:
 
 ```py
+import time
+
 from revolution import Revolution
 
-with Revolution(desc='Counting up to 100', total=100) as revolution:
+with Revolution(desc='Counting up to 100', total=100) as rev:
     for _ in range(100):
-        revolution.update(1)
+        time.sleep(0.1)
+        rev.update(1)
 ```
 
 ### for loop
@@ -115,11 +195,14 @@ with Revolution(desc='Counting up to 100', total=100) as revolution:
 If you give a Revolution object a **range object** or a **list**, you can then iterate over it:
 
 ```py
+import time
+
 from revolution import Revolution
 
 total = 0
 for i in Revolution(range(100)):
     total += i
+    time.sleep(0.1)
 
 print(total)
 ```
@@ -131,9 +214,10 @@ Finally, you can use `revolution` by manually controlling when to stop it:
 ```py
 from revolution import Revolution
 
-revolution = Revolution(desc='Doing things...')
-start_long_task()
-revolution.stop()
+rev = Revolution(desc='Doing things...')
+rev.start()
+# ...
+rev.stop()
 ```
 
 ## Styles
