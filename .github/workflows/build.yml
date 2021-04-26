@@ -1,4 +1,4 @@
-name: Build and Test [Python 3.6, 3.7, 3.8, 3.9]
+name: revolution
 
 on: [push]
 
@@ -32,5 +32,6 @@ jobs:
 
       - name: generate report
         run: coverage run -m pytest
+
       - name: upload coverage to codecov
         uses: codecov/codecov-action@v1
