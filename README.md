@@ -26,110 +26,6 @@ In order to use `revolution` in your code, importing it is as simple as:
 from revolution import Revolution
 ```
 
-### Parameters for Revolution()
-
-These are the available parameters for initializing a Revolution object:
-
-```py
-Revolution(func=None, desc='', total=None, style='', color='blue', success=None, safe=True, interval=None)
-```
-
-#### `func`
-<details>
-<summary>More info</summary>
-
-`func` : list or range, optional
-
-If this is a list or range object, it will iterate over each of the elements and return them one by one.
-
-The `func` parameter should be left blank unless you initialize a Revolution object with a range object or a list.
-
-</details>
-
-#### `desc`
-<details>
-<summary>More info</summary>
-
-`desc` : str, optional
-
-A string to use in place of the text that displays beside the spinner.
-
-</details>
-
-#### `total`
-<details>
-<summary>More info</summary>
-
-`total` : int, optional
-
-An integer that indicates the total number of expected iterations.
-
-</details>
-
-#### `style`
-<details>
-<summary>More info</summary>
-
-`style` : str, optional
-
-A string that indicates which spinner style to use. If style is None or if it doesn't exist, the classic style will be used.
-
-Available options can be viewed by running `revolution --example` or `revolution -e` in your console.
-
-</details>
-
-#### `color`
-<details>
-<summary>More info</summary>
-
-`color` : str, optional
-
-A string that indicates which color should be used for the spinner. If a color is not provided, the color will default to 'blue'.
-
-Available options:
-    * `black`
-    * `red`
-    * `green`
-    * `yellow`
-    * `blue`
-    * `violet`
-    * `cyan`
-    * `white`
-
-</details>
-
-#### `success`
-<details>
-<summary>More info</summary>
-
-`success` : str, optional
-
-A string that will be displayed beside the spinner when the spinner animation stops.
-
-</details>
-
-#### `safe`
-<details>
-<summary>More info</summary>
-
-`safe` : bool, optional
-
-If True (default), spinners on Windows machines will always use the 'classic' style (even if a different style is provided).
-
-If you are using a certain spinner style and are unsure as to how it will appear on Windows machines, it is recommended that you leave `safe` set to its default value.
-
-</details>
-
-#### `interval`
-<details>
-<summary>More info</summary>
-
-`interval` : float, optional
-
-A float value that is used to indicate the refresh rate of the entire spinner.
-
-</details>
-
 ### Function decorator
 
 `revolution` can be used as a **function decorator**:
@@ -207,7 +103,7 @@ for i in Revolution(range(100)):
 print(total)
 ```
 
-### General
+### Manual
 
 Finally, you can use `revolution` by manually controlling when to stop it:
 
@@ -219,6 +115,110 @@ rev.start()
 # ...
 rev.stop()
 ```
+
+## Parameters
+
+These are the available parameters for initializing a Revolution object:
+
+```py
+Revolution(func=None, desc='', total=None, style='', color='blue', success=None, safe=True, interval=None)
+```
+
+### `func`
+<details>
+<summary>More info</summary>
+
+`func` : list or range, optional
+
+If this is a list or range object, it will iterate over each of the elements and return them one by one.
+
+The `func` parameter should be left blank unless you initialize a Revolution object with a range object or a list.
+
+</details>
+
+### `desc`
+<details>
+<summary>More info</summary>
+
+`desc` : str, optional
+
+A string to use in place of the text that displays beside the spinner.
+
+</details>
+
+### `total`
+<details>
+<summary>More info</summary>
+
+`total` : int, optional
+
+An integer that indicates the total number of expected iterations.
+
+</details>
+
+### `style`
+<details>
+<summary>More info</summary>
+
+`style` : str, optional
+
+A string that indicates which spinner style to use. If style is None or if it doesn't exist, the classic style will be used.
+
+Available options can be viewed by running `revolution --example` or `revolution -e` in your console.
+
+</details>
+
+### `color`
+<details>
+<summary>More info</summary>
+
+`color` : str, optional
+
+A string that indicates which color should be used for the spinner. If a color is not provided, the color will default to 'blue'.
+
+Available options:
+    * `black`
+    * `red`
+    * `green`
+    * `yellow`
+    * `blue`
+    * `violet`
+    * `cyan`
+    * `white`
+
+</details>
+
+### `success`
+<details>
+<summary>More info</summary>
+
+`success` : str, optional
+
+A string that will be displayed beside the spinner when the spinner animation stops.
+
+</details>
+
+### `safe`
+<details>
+<summary>More info</summary>
+
+`safe` : bool, optional
+
+If True (default), spinners on Windows machines will always use the 'classic' style (even if a different style is provided).
+
+If you are using a certain spinner style and are unsure as to how it will appear on Windows machines, it is recommended that you leave `safe` set to its default value.
+
+</details>
+
+### `interval`
+<details>
+<summary>More info</summary>
+
+`interval` : float, optional
+
+A float value that is used to indicate the refresh rate of the entire spinner.
+
+</details>
 
 ## Styles
 
