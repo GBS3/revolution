@@ -317,7 +317,7 @@ class Revolution:
             for frame in self._spinner:
                 print('\r', end='')
                 sys.stdout.write(self._statement.format(
-                    frame, self._desc, self._count, self._total, self._rate))
+                    frame, self._desc, self._count, self._total, self._rate) + '\r')
 
                 if self._main_event.is_set() or self._count == self._total:
                     print('\r', end='')
