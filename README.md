@@ -1,10 +1,10 @@
 # revolution
 
-![Supported Versions](https://img.shields.io/pypi/pyversions/revolution?style=flat-square)
-![PyPI Version](https://img.shields.io/pypi/v/revolution?style=flat-square)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/GBS3/revolution/revolution?style=flat-square)
-![Codecov](https://img.shields.io/codecov/c/github/GBS3/revolution?style=flat-square)
-![License](https://img.shields.io/pypi/l/revolution?style=flat-square)
+![Supported Versions](https://img.shields.io/pypi/pyversions/revolution)
+![PyPI Version](https://img.shields.io/pypi/v/revolution)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/GBS3/revolution/revolution)
+[![codecov](https://codecov.io/gh/GBS3/revolution/branch/main/graph/badge.svg)](https://codecov.io/gh/GBS3/revolution)
+![License](https://img.shields.io/pypi/l/revolution)
 
 <img src="https://raw.githubusercontent.com/GBS3/revolution/main/media/icon.gif?token=AQ2HXW2ZE4ML27FSUQRTLGLAOEKU6" width="200" align="right">
 
