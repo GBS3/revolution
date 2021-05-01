@@ -1,3 +1,9 @@
+"""
+revolution.colors
+====================
+
+A module that is responsible for enabling color in the console.
+"""
 import platform
 import subprocess
 
