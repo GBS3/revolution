@@ -1,3 +1,9 @@
+"""
+revolution.spinner
+====================
+
+A module that contains the Spinner class which is responsible for spinner animation frames.
+"""
 from .colors import Color
 from .colors import wrap_iterable_elements_with_color
 
