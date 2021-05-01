@@ -1,3 +1,9 @@
+"""
+revolution.revolution
+====================
+
+A module that contains the Revolution class for creating Revolution objects.
+"""
 import math
 import platform
 import shutil
@@ -7,9 +13,9 @@ import time
 import traceback
 import types
 
+from . import constants
 from .spinner import Spinner
-from .colors import Color
-from .colors import wrap_text_with_color
+from .colors import Color, wrap_text_with_color
 
 
 class Revolution:
@@ -31,6 +37,9 @@ class Revolution:
             func = args[0]
             if isinstance(func, types.FunctionType):
                 def wrapper(*margs, **mkwargs):
+                    sys.stdout.write(constants.HIDE_CURSOR)
+                    sys.stdout.flush()
+
                     self.start()
 
                     result = func(*margs, **mkwargs)
@@ -52,6 +61,8 @@ class Revolution:
         """
         Entry point for with statements. Used in conjunction with __exit__.
         """
+        sys.stdout.write(constants.HIDE_CURSOR)
+        sys.stdout.flush()
 
         self.start()
         return self
@@ -65,6 +76,10 @@ class Revolution:
         if (exc_type, exc_value, exc_traceback) == (None, None, None):
             while not self._spin_event.is_set():
                 pass
+
+            sys.stdout.write(constants.SHOW_CURSOR)
+            sys.stdout.flush()
+
             return
         traceback.print_exception(exc_type, exc_value, exc_traceback)
 
@@ -317,7 +332,7 @@ class Revolution:
             for frame in self._spinner:
                 print('\r', end='')
                 sys.stdout.write(self._statement.format(
-                    frame, self._desc, self._count, self._total, self._rate) + '\r')
+                    frame, self._desc, self._count, self._total, self._rate))
 
                 if self._main_event.is_set() or self._count == self._total:
                     print('\r', end='')
@@ -326,6 +341,10 @@ class Revolution:
 
                     self._rate_event.set()
                     self._spin_event.set()
+
+                    sys.stdout.write(constants.SHOW_CURSOR)
+                    sys.stdout.flush()
+
                     return
 
                 time.sleep(self._interval)
