@@ -7,6 +7,7 @@ import pytest
 
 from revolution.revolution import Revolution
 from revolution.spinner import Spinner
+from revolution.constants import SUCCESS_FRAME, FAIL_FRAME
 
 
 class TestRevolution:
@@ -33,11 +34,12 @@ class TestRevolution:
 
         # Test for success:
         assert self.revolution_normal._success_message == ''
-        assert self.revolution_normal._success_frame == '\x1b[32m+\x1b[0m'
+        assert self.revolution_normal._success_frame == SUCCESS_FRAME
 
         # Test for fail:
         assert self.revolution_normal._fail_message == ''
-        assert self.revolution_normal._fail_frame == '\x1b[31m-\x1b[0m'
+        assert self.revolution_normal._fail_frame == '\x1b[31m' + \
+            FAIL_FRAME + '\x1b[0m'
 
         assert self.revolution_normal._style == 'classic'
 
@@ -181,7 +183,7 @@ class TestRevolution:
 
         rev.success = 'Done!'
 
-        rev.stop()
+        assert rev._frame == '\x1b[32m' + SUCCESS_FRAME + '\x1b[0m'
 
     def test__spin_manual_use_with_fail(self):
         rev = Revolution(desc='Manual use (fail)')
@@ -189,6 +191,8 @@ class TestRevolution:
         time.sleep(2)
 
         rev.fail = 'Unfortunate'
+
+        assert rev._frame == '\x1b[31m' + FAIL_FRAME + '\x1b[0m'
 
     def test__make_statement_for_empty_statement(self):
         statement = self.revolution_normal._make_statement()

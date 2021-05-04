@@ -202,14 +202,19 @@ class Revolution:
 
         # For success messages:
         self._success_message = success or desc
-        green = Color('green')
-        self._success_frame = wrap_text_with_color('+', green.color)
+        if success:
+            green = Color('green')
+            self._success_frame = wrap_text_with_color(
+                constants.SUCCESS_FRAME, green.color)
+        else:
+            self._success_frame = '+'
         self._frame = self._success_frame
 
         # For fail messages:
         self._fail_message = desc
         red = Color('red')
-        self._fail_frame = wrap_text_with_color('-', red.color)
+        self._fail_frame = wrap_text_with_color(
+            constants.FAIL_FRAME, red.color)
 
         # Determines which spinner style should be used based on the OS:
         if safe:
@@ -233,6 +238,10 @@ class Revolution:
     def success(self, text):
         self._success_message = text
         self._message = self._success_message
+
+        green = Color('green')
+        self._frame = wrap_text_with_color(
+            constants.SUCCESS_FRAME, green.color)
 
         try:
             self.stop()
