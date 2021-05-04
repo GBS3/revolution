@@ -1,5 +1,5 @@
 __title__ = 'revolution'
-__version__ = '0.2.2'
+__version__ = '0.3.0'
 __author__ = 'Giovanni Salinas'
 __author_email__ = 'gbs3@protonmail.com'
 __description__ = 'An assortment of spinners to use while your Python programs run.'
